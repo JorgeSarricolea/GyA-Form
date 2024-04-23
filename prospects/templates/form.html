@@ -11,83 +11,115 @@
     />
   </head>
   <body>
-    <div class="container mt-5">
-      <h2>Prospect Form</h2>
-      <form method="POST" action="">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="full_name">Full Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="full_name"
-            name="full_name"
-            required
-          />
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="prospectModal"
+      tabindex="-1"
+      aria-labelledby="prospectModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="prospectModalLabel">Prospect Form</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="full_name"
+                  name="full_name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phone_number"
+                  name="phone_number"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="education_level">Education Level</label>
+                <select
+                  class="form-control"
+                  id="education_level"
+                  name="education_level"
+                  required
+                >
+                  <option value="" disabled selected>
+                    Select Education Level
+                  </option>
+                  <option value="High School">Secundaria</option>
+                  <option value="Preparatory">Preparatoria</option>
+                  <option value="Bachelor">Licenciatura</option>
+                </select>
+              </div>
+              <div class="form-group form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="currently_employed"
+                  name="currently_employed"
+                />
+                <label class="form-check-label" for="currently_employed"
+                  >Currently Employed</label
+                >
+              </div>
+              <div class="form-group form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="sales_experience"
+                  name="sales_experience"
+                />
+                <label class="form-check-label" for="sales_experience"
+                  >Sales Experience</label
+                >
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="phone_number">Phone Number</label>
-          <input
-            type="text"
-            class="form-control"
-            id="phone_number"
-            name="phone_number"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="education_level">Education Level</label>
-          <select
-            class="form-control"
-            id="education_level"
-            name="education_level"
-            required
-          >
-            <option value="" disabled selected>Select Education Level</option>
-            <option value="High School">Secundaria</option>
-            <option value="Preparatory">Preparatoria</option>
-            <option value="Bachelor">Licenciatura</option>
-          </select>
-        </div>
-        <div class="form-group form-check">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            id="currently_employed"
-            name="currently_employed"
-          />
-          <label class="form-check-label" for="currently_employed"
-            >Currently Employed</label
-          >
-        </div>
-        <div class="form-group form-check">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            id="sales_experience"
-            name="sales_experience"
-          />
-          <label class="form-check-label" for="sales_experience"
-            >Sales Experience</label
-          >
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Open modal on page load -->
+    <script>
+      $(document).ready(function () {
+        $("#prospectModal").modal("show");
+      });
+    </script>
   </body>
 </html>

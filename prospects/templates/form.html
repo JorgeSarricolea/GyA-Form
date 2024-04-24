@@ -33,7 +33,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form method="POST" action="">
+            <form method="POST" action="/prospects/new/">
               {% csrf_token %}
               <div class="form-group">
                 <label for="full_name">Nombre completo</label>
@@ -82,28 +82,57 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="currently_employed">¿Actualmente trabajas?</label><br>
+                <label for="currently_employed">¿Actualmente trabajas?</label
+                ><br />
                 <div class="form-check form-check-inline">
-                  <input type="radio" class="form-check-input" id="employed_yes" name="currently_employed" value="yes">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="employed_yes"
+                    name="currently_employed"
+                    value="True"
+                  />
                   <label class="form-check-label" for="employed_yes">Sí</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input type="radio" class="form-check-input" id="employed_no" name="currently_employed" value="no">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="employed_no"
+                    name="currently_employed"
+                    value="False"
+                  />
                   <label class="form-check-label" for="employed_no">No</label>
                 </div>
               </div>
               <div class="form-group">
-                <label for="sales_experience">¿Tienes experiencia en ventas?</label><br>
+                <label for="sales_experience"
+                  >¿Tienes experiencia en ventas?</label
+                ><br />
                 <div class="form-check form-check-inline">
-                  <input type="radio" class="form-check-input" id="sales_exp_yes" name="sales_experience" value="yes">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="sales_exp_yes"
+                    name="sales_experience"
+                    value="True"
+                  />
                   <label class="form-check-label" for="sales_exp_yes">Sí</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input type="radio" class="form-check-input" id="sales_exp_no" name="sales_experience" value="no">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="sales_exp_no"
+                    name="sales_experience"
+                    value="False"
+                  />
                   <label class="form-check-label" for="sales_exp_no">No</label>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+              <button type="submit" class="btn btn-primary btn-block">
+                Enviar
+              </button>
             </form>
           </div>
         </div>

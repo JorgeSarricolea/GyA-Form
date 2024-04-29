@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Prospect model
 class Prospect(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.EmailField()

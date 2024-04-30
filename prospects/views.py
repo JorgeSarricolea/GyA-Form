@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.conf import settings
 from .models import Prospect
 
+# Show popup form
 def show_form(request):
     return render(request, 'form.html')
 
+# Create a new prospect
 def create_prospect(request):
     if request.method == 'POST':
         try:
@@ -31,7 +36,30 @@ def create_prospect(request):
 
             # Save the Prospect object to the database
             prospect.save()
-            print('New lead successfully created!')
+            print('New prospect successfully saved in DB!')
+
+            # Create context with prospect data
+            context = {
+                'prospect': prospect,
+            }
+
+            # Render the email template with the context
+            email_content = render_to_string('recluta_email_template.html', context)
+
+            # Create and send the email message
+            email = EmailMessage(
+                subject='¡Nuevo prospecto registrado!',
+                body=email_content,  # Pass the HTML content directly to the body
+                from_email=settings.EMAIL_HOST_USER,
+                to=[settings.EMAIL_HOST_USER],
+            )
+            email.content_subtype = 'html'  # Set content type as HTML
+            email.fail_silently = False
+
+             # Send email to Recluta Team
+            email.send()
+            print('Email sent to Recluta Team!')
+
             return redirect('/prospects/')
         except Exception as e:
             print(f'Error creating prospect: {str(e)}')

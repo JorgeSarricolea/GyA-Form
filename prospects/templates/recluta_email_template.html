@@ -1,0 +1,20 @@
+<h1>Nuevo Prospecto Registrado</h1>
+<p>A continuación se muestran los detalles del nuevo prospecto:</p>
+<ul>
+  <li><strong>Nombre(s):</strong> {{ prospect.first_name }}</li>
+  <li>
+    <strong>Apellidos:</strong>
+    {{ prospect.last_name }} {{ prospect.mother_last_name }}
+  </li>
+  <li><strong>Correo Electrónico:</strong> {{ prospect.email }}</li>
+  <li><strong>Número de Teléfono:</strong> {{ prospect.phone_number }}</li>
+  <li><strong>Nivel de Educación:</strong> {{ prospect.education_level }}</li>
+  <li>
+    <strong>Actualmente Empleado:</strong>
+    {% if prospect.currently_employed %} Sí {% else %} No {% endif %}
+  </li>
+  <li>
+    <strong>Experiencia en Ventas:</strong>
+    {% if prospect.sales_experience %} Sí {% else %} No {% endif %}
+  </li>
+</ul>

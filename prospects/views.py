@@ -37,9 +37,9 @@ def create_prospect(request):
     if request.method == 'POST':
         try:
             # Get form data
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            mother_last_name = request.POST.get('mother_last_name')
+            first_name = request.POST.get('first_name').capitalize()
+            last_name = request.POST.get('last_name').capitalize()
+            mother_last_name = request.POST.get('mother_last_name').capitalize()
             email = request.POST.get('email')
             phone_number = request.POST.get('phone_number')
             education_level = request.POST.get('education_level')

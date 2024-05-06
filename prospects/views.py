@@ -5,11 +5,12 @@ from django.conf import settings
 from .models import Prospect
 import os
 
-# List of email recipients
-RECIPIENTS = [
-    os.getenv('RECLUTA_EMAIL_A'),
-    os.getenv('RECLUTA_EMAIL_B')
-]
+# List of email RECLUTA_EMAILS
+RECLUTA_EMAILS = os.getenv('RECLUTA_EMAILS').split(',')
+
+# List of email recipients for Admin Team
+ADMIN_EMAILS = os.getenv('ADMIN_EMAILS').split(',')
+
 # Index to keep track of the last sent email
 last_email_index = 0
 
@@ -39,44 +40,43 @@ def save_prospect(data):
     print('New prospect successfully saved in DB!')
     return prospect
 
-# Sends email to Recluta Team.
-def send_email_to_recluta(prospect):
+# Sends email to specified RECLUTA_EMAILS
+def send_email(subject, body, to_emails):
     try:
-        global last_email_index
-        to_email = RECIPIENTS[last_email_index]
-        context = {'prospect': prospect}
-        email_content = render_to_string('email/recluta.html', context)
         email = EmailMessage(
-            subject='¡Nuevo prospecto registrado!',
-            body=email_content,
+            subject=subject,
+            body=body,
             from_email=settings.EMAIL_HOST_USER,
-            to=[to_email],
+            to=to_emails,
         )
         email.content_subtype = 'html'
         email.fail_silently = False
         email.send()
-        print(f'Email sent to {to_email}!')
-        last_email_index = (last_email_index + 1) % len(RECIPIENTS)
+        for to_email in to_emails:
+            print(f'Email sent to {to_email}!')
     except Exception as e:
-        print(f'Error sending email to Recluta Team: {str(e)}')
+        print(f'Error sending email: {str(e)}')
+
+# Sends email to Recluta Team.
+def send_email_to_recluta(prospect):
+    global last_email_index
+    to_email = RECLUTA_EMAILS[last_email_index]
+    context = {'prospect': prospect}
+    email_content = render_to_string('email/recluta.html', context)
+    send_email('¡Nuevo prospecto registrado!', email_content, [to_email])
+    last_email_index = (last_email_index + 1) % len(RECLUTA_EMAILS)
+
+# Sends email to admin team
+def send_email_to_admin(prospect):
+    context = {'prospect': prospect}
+    email_content = render_to_string('email/recluta.html', context)
+    send_email('¡Nuevo prospecto registrado!', email_content, ADMIN_EMAILS)
 
 # Sends thank you email to prospect.
 def send_thank_you_email(prospect_email):
-    try:
-        context = {'prospect_email': prospect_email}
-        email_content = render_to_string('email/thanks.html', context)
-        email = EmailMessage(
-            subject='¡Gracias por registrarte!',
-            body=email_content,
-            from_email=settings.EMAIL_HOST_USER,
-            to=[prospect_email],
-        )
-        email.content_subtype = 'html'
-        email.fail_silently = False
-        email.send()
-        print(f'Thank you email sent to {prospect_email}!')
-    except Exception as e:
-        print(f'Error sending thank you email: {str(e)}')
+    context = {'prospect_email': prospect_email}
+    email_content = render_to_string('email/thanks.html', context)
+    send_email('¡Gracias por registrarte!', email_content, [prospect_email])
 
 # Creates a new prospect.
 def create_prospect(request):
@@ -86,6 +86,7 @@ def create_prospect(request):
             prospect = save_prospect(form_data)
             send_email_to_recluta(prospect)
             send_thank_you_email(prospect.email)
+            send_email_to_admin(prospect)
             return redirect('/prospects/')
     except Exception as e:
         print(f'Error creating prospect: {str(e)}')

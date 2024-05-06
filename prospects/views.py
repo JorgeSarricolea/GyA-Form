@@ -3,14 +3,28 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
 from .models import Prospect
+import os
+
+# List of email recipients
+RECIPIENTS = [
+    os.getenv('RECLUTA_EMAIL_A'),
+    os.getenv('RECLUTA_EMAIL_B')
+]
+# Index to keep track of the last sent email
+last_email_index = 0
 
 # Show popup form
 def show_form(request):
     return render(request, 'form.html')
 
-# Create a new prospect
+# Send email to recluta team
 def send_email_to_recluta(prospect):
     try:
+        global last_email_index
+
+        # Get the next email recipient
+        to_email = RECIPIENTS[last_email_index]
+
         # Create context with prospect data
         context = {'prospect': prospect}
 
@@ -22,17 +36,21 @@ def send_email_to_recluta(prospect):
             subject='¡Nuevo prospecto registrado!',
             body=email_content,  # Pass the HTML content directly to the body
             from_email=settings.EMAIL_HOST_USER,
-            to=[settings.EMAIL_HOST_USER],
+            to=[to_email],
         )
         email.content_subtype = 'html'  # Set content type as HTML
         email.fail_silently = False
 
         # Send email to Recluta Team
         email.send()
-        print('Email sent to Recluta Team!')
+        print(f'Email sent to {to_email}!')
+
+        # Update the index for the next email
+        last_email_index = (last_email_index + 1) % len(RECIPIENTS)
     except Exception as e:
         print(f'Error sending email: {str(e)}')
 
+# Create a new prospect
 def create_prospect(request):
     if request.method == 'POST':
         try:

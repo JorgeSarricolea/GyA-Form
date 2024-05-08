@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-rnf(ymmuve=ld#q39r8@u49chikc6d=ciikqbs!7*_ybr1qr4^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['recluta-form.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'recluta-form.onrender.com']
 
 
 # Application definition
@@ -120,8 +120,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER = os.getenv('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL: True

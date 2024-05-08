@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-rnf(ymmuve=ld#q39r8@u49chikc6d=ciikqbs!7*_ybr1qr4^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['recluta-form.onrender.com']
 
 
 # Application definition

@@ -92,7 +92,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-      // Validate form
       function validateForm() {
         if (!document.getElementById("privacy_policy").checked) {
           alert("Por favor, acepte el aviso de privacidad.");
@@ -100,6 +99,22 @@
         }
         return true;
       }
+
+      let nameInputs = document.querySelectorAll('#first_name, #last_name, #mother_last_name');
+        nameInputs.forEach(function(input) {
+            input.addEventListener('input', function(event) {
+                if (/[^a-zA-Z\s]/.test(this.value)) {
+                    this.value = this.value.replace(/[^a-zA-Z\s]/, '');
+                }
+            });
+        });
+
+        let phoneNumberInput = document.getElementById('phone_number');
+          phoneNumberInput.addEventListener('input', function(event) {
+              if (/[^0-9]/.test(this.value) || this.value.length > 15) {
+                  this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15);
+              }
+          });
     </script>
   </body>
 </html>
